@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B4DDC0B1BFAC48A008F6CD7 /* do_AppleIAP_App.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = A7B332DD1BD9C53A00E3C2D9 /* do_AppleIAP_App.h */; };
+		3B4DDC0C1BFAC48A008F6CD7 /* do_AppleIAP_SM.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = A7B332E01BD9C53A00E3C2D9 /* do_AppleIAP_SM.h */; };
 		A44BC6701AEE005E001580AA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BC66F1AEE005E001580AA /* main.m */; };
 		A44BC6731AEE005E001580AA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BC6721AEE005E001580AA /* AppDelegate.m */; };
 		A44BC6761AEE005E001580AA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BC6751AEE005E001580AA /* ViewController.m */; };
@@ -55,6 +57,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				3B4DDC0B1BFAC48A008F6CD7 /* do_AppleIAP_App.h in CopyFiles */,
+				3B4DDC0C1BFAC48A008F6CD7 /* do_AppleIAP_SM.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -84,13 +84,6 @@
     
     SKPayment *payment = [SKPayment paymentWithProduct:p];
     [[SKPaymentQueue defaultQueue] addPayment:payment];
-    //保存有效的产品
-//    _products = [NSMutableDictionary dictionary];
-//    [response.products enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
-//    {
-//        SKProduct *product = obj;
-//        [_products setObject:product forKey:product.productIdentifier];
-//    }];
 }
 
 -(void)requestDidFinish:(SKRequest *)request

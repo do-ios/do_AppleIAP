@@ -22,7 +22,7 @@ static do_AppleIAP_App* instance;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     do_AppleIAP_SM *apple = (do_AppleIAP_SM *)[doScriptEngineHelper ParseSingletonModule:nil :@"do_AppleIAP_SM"];
-    [[SKPaymentQueue defaultQueue] addTransactionObserver:apple];
+    [[SKPaymentQueue defaultQueue] addTransactionObserver:(id<SKPaymentTransactionObserver>)apple];
     return YES;
 }
 @end
