@@ -18,6 +18,8 @@
 @property (strong,nonatomic) NSMutableDictionary *products;//有效的产品
 @property (strong,nonatomic) NSString *productID;//有效的产品ID
 @property (strong,nonatomic) NSString *appStoreVerifyURL;//实际购买验证URL
+@property (nonatomic,strong) id<doIScriptEngine> scritEngine;
+@property (nonatomic,strong) NSString *callbackName;
 @end
 
 @implementation do_AppleIAP_SM
@@ -43,29 +45,17 @@
     //异步耗时操作，但是不需要启动线程，框架会自动加载一个后台线程处理这个函数
     NSDictionary *_dictParas = [parms objectAtIndex:0];
     //参数字典_dictParas
-    id<doIScriptEngine> _scritEngine = [parms objectAtIndex:1];
-    //自己的代码实现
+    _scritEngine = [parms objectAtIndex:1];
+//    自己的代码实现
     
-    NSString *_callbackName = [parms objectAtIndex:2];
-    //回调函数名_callbackName
-    doInvokeResult *_invokeResult = [[doInvokeResult alloc] init];
-    //_invokeResult设置返回值
+    _callbackName = [parms objectAtIndex:2];
+//    //回调函数名_callbackName
+//    doInvokeResult *_invokeResult = [[doInvokeResult alloc] init];
     self.productID = _dictParas[@"productID"];
-    self.appStoreVerifyURL = _dictParas[@"appStoreVerifyURL"];
-    [self loadProducts: self.productID];
-    NSString *productIdentifier = self.productID;
-    SKProduct *product = self.products[productIdentifier];
-    if (product.productIdentifier)
-    {
-        [self purchaseProduct:product];
-        [_invokeResult SetResultBoolean:YES];
+    [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+    if ([SKPaymentQueue canMakePayments]) {
+        [self loadProducts:self.productID];
     }
-    else
-    {
-        NSLog(@"没有可用商品.");
-        [_invokeResult SetResultBoolean:NO];
-    }
-    [_scritEngine Callback:_callbackName :_invokeResult];
 }
 
 
@@ -78,25 +68,43 @@
  */
 -(void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
 {
+    doInvokeResult *_invokeResult = [[doInvokeResult alloc] init];
+    NSArray *product = response.products;
+    if([product count] == 0){
+        [_invokeResult SetResultBoolean:NO];
+        [_scritEngine Callback:_callbackName :_invokeResult];
+        return;
+    }
+    SKProduct *p = nil;
+    for (SKProduct *pro in product) {
+        if([pro.productIdentifier isEqualToString:self.productID]){
+            p = pro;
+        }
+    }
+    
+    SKPayment *payment = [SKPayment paymentWithProduct:p];
+    [[SKPaymentQueue defaultQueue] addPayment:payment];
     //保存有效的产品
-    _products = [NSMutableDictionary dictionary];
-    [response.products enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
-    {
-        SKProduct *product = obj;
-        [_products setObject:product forKey:product.productIdentifier];
-    }];
+//    _products = [NSMutableDictionary dictionary];
+//    [response.products enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
+//    {
+//        SKProduct *product = obj;
+//        [_products setObject:product forKey:product.productIdentifier];
+//    }];
 }
 
 -(void)requestDidFinish:(SKRequest *)request
 {
-    NSLog(@"请求完成.");
+    
 }
 
 -(void)request:(SKRequest *)request didFailWithError:(NSError *)error
 {
     if (error)
     {
-        NSLog(@"请求过程中发生错误，错误信息：%@",error.localizedDescription);
+        doInvokeResult *_invokeResult = [[doInvokeResult alloc] init];
+        [_invokeResult SetResultBoolean:NO];
+        [_scritEngine Callback:_callbackName :_invokeResult];
     }
 }
 #pragma mark - SKPaymentQueue监听方法
@@ -114,9 +122,12 @@
         {//已购买成功
             NSLog(@"交易\"%@\"成功.",paymentTransaction.payment.productIdentifier);
             //购买成功后进行验证
-            [self verifyPurchaseWithPaymentTransaction];
+//            [self verifyPurchaseWithPaymentTransaction];
             //结束支付交易
             [queue finishTransaction:paymentTransaction];
+            doInvokeResult *_invokeResult = [[doInvokeResult alloc] init];
+            [_invokeResult SetResultBoolean:YES];
+            [_scritEngine Callback:_callbackName :_invokeResult];
         }
         else if(paymentTransaction.transactionState == SKPaymentTransactionStateRestored)
         {//恢复成功，对于非消耗品才能恢复,如果恢复成功则transaction中记录的恢复的产品交易

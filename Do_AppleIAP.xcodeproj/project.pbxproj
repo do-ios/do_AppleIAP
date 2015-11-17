@@ -17,9 +17,8 @@
 		A44BC6A21AEE008D001580AA /* doScriptEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BC69C1AEE008D001580AA /* doScriptEngine.m */; };
 		A44BC6A31AEE008D001580AA /* doService.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BC69E1AEE008D001580AA /* doService.m */; };
 		A4A1A01D1AF0F83700D835A5 /* do_Test.json in Resources */ = {isa = PBXBuildFile; fileRef = A4A1A01C1AF0F82B00D835A5 /* do_Test.json */; };
-		A7B332E21BD9C53A00E3C2D9 /* do_AppleIAP_App.m in Sources */ = {isa = PBXBuildFile; fileRef = A7B332DE1BD9C53A00E3C2D9 /* do_AppleIAP_App.m */; settings = {ASSET_TAGS = (); }; };
-		A7B332E31BD9C53A00E3C2D9 /* do_AppleIAP_SM.m in Sources */ = {isa = PBXBuildFile; fileRef = A7B332E11BD9C53A00E3C2D9 /* do_AppleIAP_SM.m */; settings = {ASSET_TAGS = (); }; };
-		A7B332E51BD9CA8800E3C2D9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7B332E41BD9CA8800E3C2D9 /* StoreKit.framework */; };
+		A7B332E21BD9C53A00E3C2D9 /* do_AppleIAP_App.m in Sources */ = {isa = PBXBuildFile; fileRef = A7B332DE1BD9C53A00E3C2D9 /* do_AppleIAP_App.m */; };
+		A7B332E31BD9C53A00E3C2D9 /* do_AppleIAP_SM.m in Sources */ = {isa = PBXBuildFile; fileRef = A7B332E11BD9C53A00E3C2D9 /* do_AppleIAP_SM.m */; };
 		CCEB2AC71B09D92A00949C58 /* doModuleExtManage.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEB2AC61B09D92A00949C58 /* doModuleExtManage.m */; };
 		CCEB2B001B09D9C700949C58 /* libDoCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CCEB2AFF1B09D9C700949C58 /* libDoCore.a */; };
 		CCFAEA921B00B16A00AED8D5 /* doPageViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CCFAEA911B00B16A00AED8D5 /* doPageViewFactory.m */; };
@@ -89,7 +88,6 @@
 		A7B332DF1BD9C53A00E3C2D9 /* do_AppleIAP_ISM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = do_AppleIAP_ISM.h; sourceTree = "<group>"; };
 		A7B332E01BD9C53A00E3C2D9 /* do_AppleIAP_SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = do_AppleIAP_SM.h; sourceTree = "<group>"; };
 		A7B332E11BD9C53A00E3C2D9 /* do_AppleIAP_SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = do_AppleIAP_SM.m; sourceTree = "<group>"; };
-		A7B332E41BD9CA8800E3C2D9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		CC1195AB1B147F7C00583148 /* doAssetLaunchImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = doAssetLaunchImage.h; path = Header/doAssetLaunchImage.h; sourceTree = "<group>"; };
 		CC1195AC1B147F7C00583148 /* doCallBackTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = doCallBackTask.h; path = Header/doCallBackTask.h; sourceTree = "<group>"; };
 		CC1195AD1B147F7C00583148 /* doDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = doDefines.h; path = Header/doDefines.h; sourceTree = "<group>"; };
@@ -212,7 +210,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A7B332E51BD9CA8800E3C2D9 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,7 +219,6 @@
 		A44BC6611AEE005E001580AA = {
 			isa = PBXGroup;
 			children = (
-				A7B332E41BD9CA8800E3C2D9 /* StoreKit.framework */,
 				CCFAEAC51B00F00C00AED8D5 /* lib */,
 				A44BC66C1AEE005E001580AA /* Do_Test */,
 				A44BC7B31AEE19CD001580AA /* doExtLib */,
@@ -564,9 +560,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -600,7 +596,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
