@@ -68,22 +68,24 @@
  */
 -(void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
 {
-    doInvokeResult *_invokeResult = [[doInvokeResult alloc] init];
+//    doInvokeResult *_invokeResult = [[doInvokeResult alloc] init];
     NSArray *product = response.products;
-    if([product count] == 0){
-        [_invokeResult SetResultBoolean:NO];
-        [_scritEngine Callback:_callbackName :_invokeResult];
-        return;
-    }
+//    if([product count] == 0){
+//        [_invokeResult SetResultBoolean:NO];
+//        [_scritEngine Callback:_callbackName :_invokeResult];
+//        return;
+//    }
     SKProduct *p = nil;
     for (SKProduct *pro in product) {
         if([pro.productIdentifier isEqualToString:self.productID]){
             p = pro;
         }
     }
-    
-    SKPayment *payment = [SKPayment paymentWithProduct:p];
-    [[SKPaymentQueue defaultQueue] addPayment:payment];
+    if (p !=nil) {
+        [self purchaseProduct:p];
+    }
+//    SKPayment *payment = [SKPayment paymentWithProduct:p];
+//    [[SKPaymentQueue defaultQueue] addPayment:payment];
 }
 
 -(void)requestDidFinish:(SKRequest *)request
@@ -135,8 +137,10 @@
             if (paymentTransaction.error.code == SKErrorPaymentCancelled)
             {//如果用户点击取消
                 NSLog(@"取消购买.");
+                doInvokeResult *_invokeResult = [[doInvokeResult alloc] init];
+                [_invokeResult SetResultBoolean:NO];
+                [_scritEngine Callback:_callbackName :_invokeResult];
             }
-            NSLog(@"ErrorCode:%li", paymentTransaction.error.code);
         }
         
     }];
