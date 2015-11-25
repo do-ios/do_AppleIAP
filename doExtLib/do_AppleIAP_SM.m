@@ -117,7 +117,7 @@
         {//已购买成功
             NSLog(@"交易\"%@\"成功.",paymentTransaction.payment.productIdentifier);
             //购买成功后进行验证
-//            [self verifyPurchaseWithPaymentTransaction];
+            //[self verifyPurchaseWithPaymentTransaction];
             //结束支付交易
             [queue finishTransaction:paymentTransaction];
             doInvokeResult *_invokeResult = [[doInvokeResult alloc] init];
@@ -131,6 +131,7 @@
             
             //恢复后重新写入偏好配置，重新加载UITableView
             [[NSUserDefaults standardUserDefaults]setBool:YES forKey:paymentTransaction.payment.productIdentifier];
+            [[NSUserDefaults standardUserDefaults] synchronize];
         }
         else if(paymentTransaction.transactionState == SKPaymentTransactionStateFailed)
         {
@@ -187,7 +188,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([product.productIdentifier isEqualToString:self.productID])
     {
-        NSLog(@"当前已经购买\"%@\" %li 个.",self.productID,(long)[defaults integerForKey:product.productIdentifier]);
+        NSLog(@"当前已经购买\"%@\" %i 个.",self.productID,[defaults integerForKey:product.productIdentifier]);
     }else if([defaults boolForKey:product.productIdentifier])
     {
         NSLog(@"\"%@\"已经购买过，无需购买!",product.productIdentifier);
@@ -248,12 +249,14 @@
         if ([productIdentifier isEqualToString:self.productID])
         {
             NSInteger purchasedCount = [defaults integerForKey:productIdentifier];//已购买数量
-            [[NSUserDefaults standardUserDefaults] setInteger:(purchasedCount+1) forKey:productIdentifier];
+            [defaults setInteger:(purchasedCount+1) forKey:productIdentifier];
         }
         else
         {
             [defaults setBool:YES forKey:productIdentifier];
         }
+        [defaults synchronize];
+
         //在此处对购买记录进行存储，可以存储到开发商的服务器端
     }
     else
