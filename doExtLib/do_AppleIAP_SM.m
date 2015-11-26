@@ -12,6 +12,7 @@
 #import "doIScriptEngine.h"
 #import "doInvokeResult.h"
 #import <StoreKit/StoreKit.h>
+#import "doJsonHelper.h"
 
 @interface do_AppleIAP_SM ()<SKProductsRequestDelegate,SKPaymentTransactionObserver>
 
@@ -52,6 +53,7 @@
 //    //回调函数名_callbackName
 //    doInvokeResult *_invokeResult = [[doInvokeResult alloc] init];
     self.productID = _dictParas[@"productID"];
+    self.appStoreVerifyURL = [doJsonHelper GetOneText:_dictParas :@"verifyURL" :@""];
     [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
     if ([SKPaymentQueue canMakePayments]) {
         [self loadProducts:self.productID];
@@ -68,13 +70,7 @@
  */
 -(void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
 {
-//    doInvokeResult *_invokeResult = [[doInvokeResult alloc] init];
     NSArray *product = response.products;
-//    if([product count] == 0){
-//        [_invokeResult SetResultBoolean:NO];
-//        [_scritEngine Callback:_callbackName :_invokeResult];
-//        return;
-//    }
     SKProduct *p = nil;
     for (SKProduct *pro in product) {
         if([pro.productIdentifier isEqualToString:self.productID]){
@@ -84,8 +80,6 @@
     if (p !=nil) {
         [self purchaseProduct:p];
     }
-//    SKPayment *payment = [SKPayment paymentWithProduct:p];
-//    [[SKPaymentQueue defaultQueue] addPayment:payment];
 }
 
 -(void)requestDidFinish:(SKRequest *)request
@@ -117,7 +111,7 @@
         {//已购买成功
             NSLog(@"交易\"%@\"成功.",paymentTransaction.payment.productIdentifier);
             //购买成功后进行验证
-            //[self verifyPurchaseWithPaymentTransaction];
+            [self verifyPurchaseWithPaymentTransaction];
             //结束支付交易
             [queue finishTransaction:paymentTransaction];
             doInvokeResult *_invokeResult = [[doInvokeResult alloc] init];
@@ -188,7 +182,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([product.productIdentifier isEqualToString:self.productID])
     {
-        NSLog(@"当前已经购买\"%@\" %i 个.",self.productID,[defaults integerForKey:product.productIdentifier]);
+        NSLog(@"当前已经购买\"%@\" %li 个.",self.productID,(long)[defaults integerForKey:product.productIdentifier]);
     }else if([defaults boolForKey:product.productIdentifier])
     {
         NSLog(@"\"%@\"已经购买过，无需购买!",product.productIdentifier);

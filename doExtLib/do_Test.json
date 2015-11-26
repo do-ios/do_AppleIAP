@@ -1,68 +1,68 @@
 {
-  "ID": "do_AppleIAP",
-  "IsContainer": "0",
-  "Type": "SM",
-  "Name": "Apple应用内支付",
-  "Version": "Internal",
-  "Description": "用户通过传入商品ID，数量可以调起Apple支付界面，同时支持商品重复购买更新",
-  "Icon": "",
-  "IOS": {
-    "Support": 0,
-    "MinVersion": ""
-  },
-  "Android": {
-    "Support": 0,
-    "MinVersion": ""
-  },
-  "Windows": {
-    "Support": 0,
-    "MinVersion": ""
-  },
-  "WindowsPhone": {
-    "Support": 0,
-    "MinVersion": ""
-  },
-  "Html": {
-    "Support": 1,
-    "MinVersion": "5.0"
-  },
-  "Properties": [],
-  "Events": [],
-  "syncMethodes": [
-    {
-      "ID": "restoreProduct",
-      "Name": "恢复购买",
-      "Description": "刷新产品购买状态",
-      "ReturnType": "",
-      "ReturnDesc": "",
-      "Paras": []
-    }
-  ],
-  "asyncMethodes": [
-    {
-      "ID": "purchase",
-      "Name": "购买商品",
-      "Description": "用户",
-      "ReturnType": "Bool",
-      "ReturnDesc": "购买状态，即成功，失败",
-      "Paras": [
-        {
-          "ID": "productID",
-          "Name": "产品ID",
-          "Type": "String",
-          "Required": 1,
-          "DefaultValue": "",
-          "Description": "对应iTunes Connect中配置的“产品ID“"
-        },
-        {
-          "ID": "appStoreVerifyURL",
-          "Name": "实际购买验证URL",
-          "Type": "String",
-          "Required": 1,
-          "DefaultValue": "",
-          "Description": "App Store上实际购买验证URL"
-        }
-      ]
-    }
-  ]
+    "ID": "do_AppleIAP",
+    "IsContainer": "0",
+    "Type": "SM",
+    "Name": "Apple应用内支付",
+    "Version": "Internal",
+    "Description": "用户通过传入商品ID，数量可以调起Apple支付界面，同时支持商品重复购买更新",
+    "Icon": "",
+    "IOS": {
+        "Support": 0,
+        "MinVersion": ""
+    },
+    "Android": {
+        "Support": 0,
+        "MinVersion": ""
+    },
+    "Windows": {
+        "Support": 0,
+        "MinVersion": ""
+    },
+    "WindowsPhone": {
+        "Support": 0,
+        "MinVersion": ""
+    },
+    "Html": {
+        "Support": 1,
+        "MinVersion": "5.0"
+    },
+    "Properties": [],
+    "Events": [],
+    "syncMethodes": [
+                     {
+                     "ID": "restoreProduct",
+                     "Name": "恢复购买",
+                     "Description": "刷新产品购买状态",
+                     "ReturnType": "",
+                     "ReturnDesc": "",
+                     "Paras": []
+                     }
+                     ],
+    "asyncMethodes": [
+                      {
+                      "ID": "purchase",
+                      "Name": "购买商品",
+                      "Description": "用户",
+                      "ReturnType": "String",
+                      "ReturnDesc": "会得到苹果返回的一个收据(receipt)",
+                      "Paras": [
+                                {
+                                "ID": "productID",
+                                "Name": "产品ID",
+                                "Type": "String",
+                                "Required": 1,
+                                "DefaultValue": "",
+                                "Description": "对应iTunes Connect中配置的“产品ID“"
+                                },
+                                {
+                                "ID": "verifyURL",
+                                "Name": "实际购买验证URL",
+                                "Type": "String",
+                                "Required": 0,
+                                "DefaultValue": "",
+                                "Description": "App Store上实际购买验证URL,是一个枚举值，开发测试:https://sandbox.itunes.apple.com/verifyReceipt。产品:https://buy.itunes.apple.com/verifyReceipt,实际的项目中使用，产品，开发测试，只是为了调试测试用的。如果不填，就说明需要自己搭建server端去验证"
+                                }
+                                ]
+                      }
+                      ]
 }
